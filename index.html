@@ -1,116 +1,174 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Репозитории lergvot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f0f8ff;
-            padding: 20px;
-        }
-
-        .card {
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            max-width: 900px;
-            margin: 0 auto 40px auto;
-        }
-
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        th {
-            background-color: #e6f2ff;
-        }
-
-        a {
-            color: #0366d6;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-
-<div class="card">
-    <h1>Привет! Я lergvot</h1>
-    <p>Экспериментирую со всякими штуками</p>
-    <a href="https://github.com/lergvot" target="_blank">Мой GitHub профиль</a>
-
-    <h2>Мои публичные репозитории</h2>
-    <table id="repos-table">
-        <thead>
-            <tr>
-                <th>Название</th>
-                <th>Описание</th>
-                <th>Язык</th>
-                <th>⭐</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td colspan="4">Загрузка...</td></tr>
-        </tbody>
-    </table>
-</div>
-
-<script>
-    async function loadRepos() {
-        const username = 'lergvot';
-        const url = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`;
-
-        try {
-            const response = await fetch(url);
-            const repos = await response.json();
-
-            const tableBody = document.querySelector('#repos-table tbody');
-            tableBody.innerHTML = ''; // Очистим "Загрузка..."
-
-            repos.forEach(repo => {
-                const row = document.createElement('tr');
-
-                row.innerHTML = `
-                    <td><a href="${repo.html_url}" target="_blank">${repo.name}</a></td>
-                    <td>${repo.description || ''}</td>
-                    <td>${repo.language || ''}</td>
-                    <td>${repo.stargazers_count}</td>
-                `;
-
-                tableBody.appendChild(row);
-            });
-
-            if (repos.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="4">Нет публичных репозиториев</td></tr>';
-            }
-        } catch (error) {
-            console.error('Ошибка загрузки репозиториев:', error);
-            document.querySelector('#repos-table tbody').innerHTML = '<tr><td colspan="4">Не удалось загрузить данные 😢</td></tr>';
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Pages site</title>
+  <link rel="icon" href="https://github.githubassets.com/favicons/favicon-dark.png" type="image/png" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    loadRepos();
-</script>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      background-color: #0d1117;
+      color: #c9d1d9;
+      line-height: 1.5;
+      padding: 24px;
+    }
 
+    .container {
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: #58a6ff;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      color: #58a6ff;
+      margin-bottom: 0.75rem;
+    }
+
+    a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tech {
+      background-color: #21262d;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    .repo-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .repo-list li {
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      transition: background-color 0.2s;
+    }
+
+    .repo-list li:hover {
+      background-color: #21262d;
+    }
+
+    .repo-name {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .contact a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.95rem;
+    }
+
+    .contact svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="section">
+      <h1>Сергей — Тестировщик ПО</h1>
+      <p>2+ года опыта: функциональное, регрессионное, интеграционное тестирование. Автоматизация на Python, работа с API и SQL.</p>
+      <p class="contact">
+        <a href="https://t.me/lergvot" target="_blank" rel="noopener">
+          <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="120" cy="120" r="120" fill="none"/>
+            <path d="M46.1 118.9l154-63.4c4.1-1.7 7.8 1.2 6.8 5.5l-25.6 120.6c-1 4.6-5 6.4-9.2 4.1l-40.4-29.8-19.5 18.8c-2.1 2.1-3.8 3.8-7.8 3.8l2.8-39.5 71.8-64.9c3.1-2.8-0.7-4.3-4.8-1.6L69.8 144.4l-38.9-12.4c-4.4-1.4-4.3-4.4 0.2-6.1z" />
+          </svg>
+          @lergvot
+        </a>
+      </p>
+    </div>
+      
+    <div class="section">
+      <h2>Технический стек</h2>
+      <div class="tech-list">
+        <div class="tech">Python</div>
+        <div class="tech">Pytest</div>
+        <div class="tech">Selenium</div>
+        <div class="tech">Postman</div>
+        <div class="tech">REST API</div>
+        <div class="tech">SQL</div>
+        <div class="tech">Git</div>
+        <div class="tech">Linux</div>
+        <div class="tech">Jira</div>
+        <div class="tech">SoapUI</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Мои проекты на GitHub</h2>
+      <ul class="repo-list" id="repo-list">
+        <li>Загрузка репозиториев...</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    async function loadRepos() {
+      const username = "lergvot";
+      const url = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`;
+      try {
+        const resp = await fetch(url);
+        const repos = await resp.json();
+        const list = document.getElementById("repo-list");
+        list.innerHTML = "";
+        repos.forEach(r => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <div class="repo-name">
+              <a href="${r.html_url}" target="_blank" rel="noopener">${r.name}</a>
+            </div>
+            <div>${r.description || ""}</div>
+          `;
+          list.appendChild(li);
+        });
+        if (!repos.length) {
+          list.innerHTML = "<li>Нет публичных репозиториев</li>";
+        }
+      } catch (e) {
+        console.error("Ошибка:", e);
+        document.getElementById("repo-list").innerHTML = "<li>Не удалось загрузить репозитории</li>";
+      }
+    }
+    loadRepos();
+  </script>
 </body>
 </html>
